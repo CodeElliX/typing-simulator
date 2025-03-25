@@ -1,0 +1,137 @@
+.buttons {
+    margin-top: 30px;
+    width: 800px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.btn {
+    background-color: rgb(250, 250, 243);
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    margin: 3px;
+    box-shadow: 0px 0px 10px rgba(82, 81, 81, 0.5);
+    transition: all 100ms ease-in-out;
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+    font-weight: bolder;
+    border-radius: 4px;
+    opacity: 0.7;
+}
+
+.buttons .string {
+    display: flex;
+    flex-direction: row;
+    margin-top: 2px;
+}
+
+.key_0_0,
+.key_0_1,
+.key_0_2,
+.key_1_1,
+.key_2_1,
+.key_3_1 {
+    background-color: #b3b2ff;
+}
+
+.key_0_3,
+.key_1_2,
+.key_2_2,
+.key_3_2 {
+    background-color: #ffddb3;
+}
+
+.key_0_4,
+.key_1_3,
+.key_2_3,
+.key_3_3 {
+    background-color: #b3ffcc;
+}
+
+.key_0_5,
+.key_0_6,
+.key_1_4,
+.key_1_5,
+.key_2_4,
+.key_2_5,
+.key_3_4,
+.key_3_5 {
+    background-color: #c9c8ff;
+}
+
+.key_0_7,
+.key_1_6,
+.key_1_7,
+.key_2_6,
+.key_2_7,
+.key_3_6,
+.key_3_7 {
+    background-color: rgba(154, 72, 198, 0.5);
+}
+
+.key_0_8,
+.key_1_8,
+.key_2_8,
+.key_3_8 {
+    background-color: #9b99ff;
+}
+
+.key_0_9,
+.key_1_9,
+.key_2_9,
+.key_3_9 {
+    background-color: #ffb3b3;
+}
+
+.key_0_10,
+.key_0_11,
+.key_0_12,
+.key_1_10,
+.key_1_11,
+.key_1_12,
+.key_1_13,
+.key_2_10,
+.key_2_11,
+.key_3_10 {
+    background-color: rgba(155, 153, 255, 0.8);
+}
+
+.key_0_13,
+.key_1_0,
+.key_2_0,
+.key_2_12,
+.key_3_0,
+.key_3_11,
+.key_4_0 {
+    background-color: #ffd1ff;
+}
+
+.key_4_0 {
+    width: 500px;
+}
+
+.key_1_0 {
+    width: 66px;
+}
+
+.key_0_13 {
+    width: 66px;
+}
+
+.key_2_0 {
+    width: 96px;
+}
+
+.key_2_12 {
+    width: 74px;
+}
+
+.key_3_0,
+.key_3_11 {
+    width: 90px;
+}

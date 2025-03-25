@@ -1,0 +1,95 @@
+.key_bourd {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.key_bourd__head {
+    font-size: 18px;
+}
+
+#stroke {
+    display: inline-flex;
+    width: 1200px;
+    height: 80px;
+    box-shadow: 0px 0px 10px rgba(82, 81, 81, 0.5);
+    border-radius: 6px;
+}
+
+#stroke .left_side,
+#stroke .right_side {
+    letter-spacing: 6px;
+}
+
+.left_side {
+    font-size: 56px;
+    letter-spacing: 0;
+    background: #e3e6e9;
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
+    color: #333;
+    text-align: right;
+    display: inline-block;
+    height: 100%;
+    overflow: hidden;
+    white-space: pre;
+    width: 50%;
+}
+
+.right_side {
+    font-size: 56px;
+    letter-spacing: 0;
+    background: #fff;
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
+    color: #333;
+    text-align: left;
+    display: inline-block;
+    height: 100%;
+    overflow: hidden;
+    text-overflow: clip;
+    white-space: pre;
+    width: 50%;
+}
+
+.instrument_panel {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.right_hand,
+.left_hand {
+    margin-top: 150px;
+    width: 170px;
+    height: 170px;
+    position: relative;
+}
+
+.pointer_with_right_hand {
+    position: relative;
+}
+
+.pointer_with_left_hand {
+    position: relative;
+}
+
+.pointer_r_hand {
+    display: none;
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background-color: red;
+    border-radius: 50%;
+}
+
+.pointer_l_hand {
+    display: none;
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background-color: red;
+    border-radius: 50%;
+}

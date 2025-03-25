@@ -1,0 +1,56 @@
+.menu_programming {
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+    min-height: 400px;
+}
+
+.menu_programming__first-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.buttonsProgramming {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 4px;
+    gap: 50px;
+}
+
+.buttonsProgramming h1 {
+    text-align: center;
+    text-shadow: 2px 2px 5px rgba(57, 56, 58, 0.5),
+        0 0 25px rgba(34, 32, 36, 0.5);
+    font-size: 36px;
+    opacity: 0.8;
+}
+
+.buttonsProgramming__oll {
+    display: flex;
+    gap: 30px;
+}
+
+.buttonsProgramming__btn {
+    width: 120px;
+    height: 50px;
+    font-size: 22px;
+    font-weight: bolder;
+    background: linear-gradient(to right, #C9C8FF, #7d7bea);
+    color: #f0f8ff;
+    text-shadow: 2px 2px 5px rgba(154, 72, 198, 0.5),
+        0 0 25px rgba(154, 72, 198, 0.5);
+    font-size: 22px;
+    box-shadow: 2px 5px 2px rgba(79, 5, 153, 0.5);
+    border-radius: 6px;
+    border: none;
+    transition: transform 0.3s ease;
+}
+
+
+.buttonsProgramming__btn:hover {
+    cursor: pointer;
+    transform: scale(1.2);
+}
