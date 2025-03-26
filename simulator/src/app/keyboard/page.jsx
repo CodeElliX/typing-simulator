@@ -1,7 +1,7 @@
 import styles from './keyboard.module.css';
 
 const Keyboard = (props) => {
-    const keyLayouts = {
+    const baseLayouts = {
         ru: [
             ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', '🠐'],
             ['TAB', 'Й', 'Ц', 'У', 'К', 'Е', 'Н', 'Г', 'Ш', 'Щ', 'З', 'Х', 'Ъ', '\\'],
@@ -25,10 +25,16 @@ const Keyboard = (props) => {
         ]
     };
 
+    // Получаем основное название языка (например, ru_less3 → ru)
+    const baseLang = props.lang?.split('_')[0];
+
+    // Выбираем соответствующую раскладку
+    const layout = baseLayouts[baseLang] || baseLayouts.en;
+
     return (
         <div className={styles.keyboard}>
             <div className={styles.buttons}>
-                {keyLayouts[props.lang]?.map((row, rowIndex) => (
+                {layout.map((row, rowIndex) => (
                     <div key={rowIndex} className={styles.string}>
                         {row.map((key, index) => {
                             return (

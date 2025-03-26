@@ -17,7 +17,7 @@ const Education = () => {
     }
     console.log(isClick)
     return (
-        <>
+        <div className={styles.wrap}>
             {!isClick && (
                 <div className={styles.language_selection}>
                     <h1>Тут ви можете опанувати техніку сліпого друку. Оберіть мову:</h1>
@@ -38,8 +38,8 @@ const Education = () => {
                     </section>
                 </div>
             )}
-            {isClick && <EducationalLessons lang={lang} />}
-        </>
+            <div className={styles.lessons}>{isClick && <EducationalLessons lang={lang} />}</div>
+        </div>
     )
 }
 
