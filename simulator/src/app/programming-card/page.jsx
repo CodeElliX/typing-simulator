@@ -50,9 +50,16 @@ const ProgrammingCardsContent = () => {
             <div className={styles.main_block_programming_cards}>
                 {cards.map((el, index) => {
                     const cardColor = colors[index % colors.length];
+                    const langPrefix = selectedButton.toLowerCase().startsWith("python") ? "py" :
+                        selectedButton.toLowerCase().startsWith("javascript") ? "js" :
+                            selectedButton.toLowerCase().startsWith("java") ? "java" :
+                                selectedButton;
+                    const textKey = langPrefix === "ru" || langPrefix === "uk"
+                        ? `${langPrefix}_${el.replace(/\s+/g, '')}`
+                        : `${langPrefix}_${el.replace(/\s+/g, '').toLowerCase()}`;
                     return (
                         <div key={index} style={{ backgroundColor: cardColor }} className={styles.card}>
-                            <Link href="/instruction"><button>{el}</button> </Link>
+                            <Link href={`/panel-tools?lang=${textKey}`}><button>{el}</button> </Link>
                         </div>
                     )
                 })}
@@ -61,3 +68,8 @@ const ProgrammingCardsContent = () => {
     )
 }
 export default ProgrammingCards;
+
+
+
+
+

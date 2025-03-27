@@ -25,10 +25,8 @@ const Keyboard = (props) => {
         ]
     };
 
-    // Получаем основное название языка (например, ru_less3 → ru)
     const baseLang = props.lang?.split('_')[0];
 
-    // Выбираем соответствующую раскладку
     const layout = baseLayouts[baseLang] || baseLayouts.en;
 
     return (

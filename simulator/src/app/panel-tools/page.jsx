@@ -8,7 +8,7 @@ import { useSearchParams } from 'next/navigation';
 import Timer from '../timer/page';
 import Keyboard from '../keyboard/page';
 import ModalWarning from '../modal-warning/page';
-import {text} from '../utils/text'
+import { text } from '../utils/text'
 
 const PanelTools = () => {
     return (
@@ -29,6 +29,7 @@ const PanelToolsContent = () => {
     const searchParams = useSearchParams();
     const maxTextLength = 16;
     const lang = searchParams.get('lang');
+    const setTimer = lang === "en" || lang === "ru" || lang === "uk";
 
     useEffect(() => {
 
@@ -71,7 +72,9 @@ const PanelToolsContent = () => {
             <ModalWarning />
             {dialogVisible && <ModalWarning />}
             <h1 className={styles.key_bourd__head}></h1>
-            <Timer startTimer={startTimer} nullTimer={nullTimer} />
+            {setTimer &&
+                <Timer startTimer={startTimer} nullTimer={nullTimer} />
+            }
             <div id={styles.stroke}>
                 <div className={styles.left_side}>{textLeft}</div>
                 <div className={styles.right_side}>{textRight}</div>
