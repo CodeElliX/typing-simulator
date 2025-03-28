@@ -35,14 +35,22 @@ const ProgrammingCardsContent = () => {
         c: 'C'
     };
 
+    const cardId = searchParams.get("lang");
+
+    useEffect(() => {
+        if (selectedButton) {
+            window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" })
+        }
+    }, [selectedButton])
+
     useEffect(() => {
         const lang = searchParams.get('lang');
         if (lang && objCardsLengProgramming[lang]) {
             setCards(objCardsLengProgramming[lang]);
             setSelectedButton(lang);
+            window.scrollTo({ bottom: 0, behavior: "smooth" })
         }
     }, [searchParams])
-
 
     return (
         <>

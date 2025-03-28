@@ -1,3 +1,4 @@
+"use client"
 import styles from "./programmers.module.css";
 import Link from "next/link";
 
