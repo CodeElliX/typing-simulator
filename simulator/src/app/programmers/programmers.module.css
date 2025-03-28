@@ -21,11 +21,31 @@
 }
 
 .buttonsProgramming h1 {
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
     text-align: center;
     text-shadow: 2px 2px 5px rgba(57, 56, 58, 0.5),
         0 0 25px rgba(34, 32, 36, 0.5);
     font-size: 36px;
     opacity: 0.8;
+}
+
+.buttonsProgramming h1 span {
+    opacity: 0;
+    display: inline-block;
+    animation: fadeIn 0.2s ease-in forwards;
+}
+
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 0.8;
+    }
 }
 
 .buttonsProgramming__oll {
