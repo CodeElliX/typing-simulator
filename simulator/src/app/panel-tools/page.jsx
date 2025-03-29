@@ -18,59 +18,107 @@ const PanelTools = () => {
     );
 };
 
+
+// useEffect(() => {
+
+//     const firstChar = textRight.charAt(0);
+
+//     const handleKeyDown = (event) => {
+//         setPressedKey(event.key);
+//         const pressedKey = event.key;
+//         if (event.key === ' ' && started) {
+//             setStartTimer(true);
+//             setTextLeft('');
+//             setTextRight(text[lang]);
+//             setStarted(false);
+//         } else if (pressedKey == firstChar) {
+//             setTextLeft(prevTextLeft => {
+//                 const newTextLeft = prevTextLeft + pressedKey;
+//                 if (newTextLeft.length > maxTextLength) {
+//                     return newTextLeft.slice(1);
+//                 }
+//                 return newTextLeft;
+//             });
+//             setTextRight(prevTextRight => prevTextRight.slice(1));
+//         } else if (textRight.length === 0) {
+//             setTextLeft('Натисніть');
+//             setTextRight('Пробіл');
+//             setStartTimer(false);
+//             setStarted(true);
+//             setNullTimer(true);
+//             setDialogVisible(true);
+//         } else if (!ignoredKeys.includes(pressedKey) && pressedKey !== firstChar) {
+//             setDialogVisible(true);
+//         }
+//     };
+//     window.addEventListener('keydown', handleKeyDown);
+//     return () => {
+//         window.removeEventListener('keydown', handleKeyDown);
+//     };
+
+// }, [searchParams, textRight]);
+
 const PanelToolsContent = () => {
 
     const [started, setStarted] = useState(true);
-    let [textLeft, setTextLeft] = useState('Натисніть');
-    let [textRight, setTextRight] = useState('Пробіл');
+    const [textLeft, setTextLeft] = useState('Натисніть');
+    const [textRight, setTextRight] = useState('Пробіл');
+    const [pressedKey, setPressedKey] = useState("");
     const [startTimer, setStartTimer] = useState(false);
     const [nullTimer, setNullTimer] = useState(false);
     const [dialogVisible, setDialogVisible] = useState(false);
     const searchParams = useSearchParams();
     const maxTextLength = 16;
     const lang = searchParams.get('lang');
+
     const setTimer = lang === "en" || lang === "ru" || lang === "uk";
+    const ignoredKeys = [' ', 'Space', 'Shift', 'Control', 'Alt', 'Meta', 'Tab', 'Escape', 'Enter', 'Backspace', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12', 'Insert', 'Home', 'End', 'PageUp', 'PageDown', 'NumLock'];
 
     useEffect(() => {
-
-        const firstChar = textRight.charAt(0);
-
         const handleKeyDown = (event) => {
             const pressedKey = event.key;
+            setPressedKey(pressedKey);
+
             if (event.key === ' ' && started) {
                 setStartTimer(true);
                 setTextLeft('');
                 setTextRight(text[lang]);
                 setStarted(false);
-            } else if (pressedKey == firstChar) {
+            } else if (pressedKey === textRight.charAt(0)) {
                 setTextLeft(prevTextLeft => {
                     const newTextLeft = prevTextLeft + pressedKey;
-                    if (newTextLeft.length > maxTextLength) {
-                        return newTextLeft.slice(1);
-                    }
-                    return newTextLeft;
+                    return newTextLeft.length > maxTextLength ? newTextLeft.slice(1) : newTextLeft;
                 });
                 setTextRight(prevTextRight => prevTextRight.slice(1));
-            } else if (textRight.length === 0) {
-                setTextLeft('Натисніть');
-                setTextRight('Пробіл');
-                setStartTimer(false);
-                setStarted(true);
-                setNullTimer(true);
-                setDialogVisible(true);
+            } else if (!ignoredKeys.includes(pressedKey) && pressedKey !== textRight.charAt(0)) {
+                // 🔥 Проверяем, совпадает ли раскладка перед открытием окна
+                const regEn = /[a-zA-Z]/;
+                const regRu = /[а-яА-Я]/;
+                const regUk = /[єЄіІїЇаґбвгдежзийклмнопрстуфхцчшщьюяАҐБВГДЕЄЖЗИЙКЛМНОПРСТУФХЦЧШЩЮЯ]/;
+
+                const isEn = regEn.test(textRight) && regEn.test(pressedKey);
+                const isRu = regRu.test(textRight) && regRu.test(pressedKey);
+                const isUk = regUk.test(textRight) && regUk.test(pressedKey);
+
+                if (!isEn && !isRu && !isUk && !dialogVisible) {
+                    setDialogVisible(true);
+                }
             }
         };
+
         window.addEventListener('keydown', handleKeyDown);
         return () => {
             window.removeEventListener('keydown', handleKeyDown);
         };
+    }, [textRight, dialogVisible]);
 
-    }, [searchParams, textRight]);
+    useEffect(() => {
+        setDialogVisible(false);
+    }, [textRight]);
 
     return (
         <div className={styles.key_bourd}>
-            <ModalWarning />
-            {dialogVisible && <ModalWarning />}
+            {dialogVisible && <ModalWarning setDialogVisible={setDialogVisible} textRight={textRight} pressedKey={pressedKey} />}
             <h1 className={styles.key_bourd__head}></h1>
             {setTimer &&
                 <Timer startTimer={startTimer} nullTimer={nullTimer} />
