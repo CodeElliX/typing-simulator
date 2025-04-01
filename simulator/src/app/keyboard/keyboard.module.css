@@ -30,6 +30,12 @@
     margin-top: 2px;
 }
 
+.activeKey {
+    box-shadow: 2px 5px 2px rgb(65, 66, 71);
+    opacity: 0.9;
+    transition: all 0.2s ease-in-out;
+}
+
 .key_0_0,
 .key_0_1,
 .key_0_2,

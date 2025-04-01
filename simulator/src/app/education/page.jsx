@@ -15,7 +15,6 @@ const Education = () => {
         setClick(true);
         setLang(selectedLanguage);
     }
-    console.log(isClick)
     return (
         <div className={styles.wrap}>
             {!isClick && (

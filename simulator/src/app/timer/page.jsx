@@ -8,7 +8,6 @@ const Timer = (props) => {
     const [counter, setCounter] = useState(0);
 
     useEffect(() => {
-
         if (!props.startTimer) return;
         if (props.nullTimer) {
             setTime('00:00');
@@ -28,7 +27,7 @@ const Timer = (props) => {
 
     return (
         <>
-            <div className={styles.timer}><span className={styles.time}>{time}</span></div>
+            <div className={`${styles.timer} ${!props.nullTimer ? styles.finish : ""}`}><span className={styles.time}>{time}</span></div>
         </>
     )
 }

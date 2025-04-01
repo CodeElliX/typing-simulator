@@ -7,29 +7,25 @@ const ModalWarning = (props) => {
     const [textLang, setTextLang] = useState("");
 
     useEffect(() => {
-        if (!props.pressedKey) return;
 
         const regEn = /^[a-zA-Z0-9,().{}<>[\]!:;@#$%^&*+=_"'?`~|\\\-\/]+$/;
         const regRu = /^[а-яА-Я0-9,().{}<>[\]!:;@#$%^&*+=_"'?`~|\\\-\/]+$/;
         const regUk = /^[єЄіІїЇаґбвгдежзийклмнопрстуфхцчшщьюяАҐБВГДЕЄЖЗИЙКЛМНОПРСТУФХЦЧШЩЮЯ0-9,().{}<>[\]!:;@#$%^&*+=_"'`~?|\\\-\/]+$/;
-        //
+
         let detectedLang = "";
-        //
-        if (regEn.test(props.textRight) && !regEn.test(props.pressedKey)) {
+
+        if (regEn.test(props.textRight.charAt(0)) && !regEn.test(props.pressedKey)) {
             detectedLang = "англійську";
-        } else if (regRu.test(props.textRight) && !regRu.test(props.pressedKey)) {
+        } else if (regRu.test(props.textRight.charAt(0)) && !regRu.test(props.pressedKey)) {
             detectedLang = "російську";
-        } else if (regUk.test(props.textRight) && !regUk.test(props.pressedKey)) {
+        } else if (regUk.test(props.textRight.charAt(0)) && !regUk.test(props.pressedKey)) {
             detectedLang = "українську";
         }
-        setTextLang(detectedLang);
+        if (detectedLang) {
+            setTextLang(detectedLang);
+            props.setDialogVisible(true);
+        }
     }, [props.pressedKey, props.textRight]);
-
-    useEffect(() => {
-        props.setDialogVisible(!!textLang);
-    }, [textLang, props.setDialogVisible]);
-
-    if (!textLang) return null;
 
     const closeDialog = () => {
         props.setDialogVisible(false);
