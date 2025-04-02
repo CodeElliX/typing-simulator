@@ -9,6 +9,7 @@ import Timer from '../timer/page';
 import Keyboard from '../keyboard/page';
 import ModalWarning from '../modal-warning/page';
 import { text } from '../utils/text'
+import ModalResult from '../modal-result/page';
 
 const PanelTools = () => {
     return (
@@ -26,7 +27,11 @@ const PanelToolsContent = () => {
     const [pressedKey, setPressedKey] = useState("");
     const [startTimer, setStartTimer] = useState(false);
     const [nullTimer, setNullTimer] = useState(true);
+    const [modalResultOpen, setModalResultOpen] = useState(false);
     const [dialogVisible, setDialogVisible] = useState(false);
+    const [level, setLevel] = useState("");
+    const [typingSpeedResult, setTypingSpeedResult] = useState("");
+    const [counter, setCounter] = useState(0);
     const searchParams = useSearchParams();
     const maxTextLength = 16;
     const lang = searchParams.get('lang');
@@ -59,18 +64,27 @@ const PanelToolsContent = () => {
         const handleKeyDown = (event) => {
             const key = event.key;
             setPressedKey(key);
-            if (event.key === ' ' && started) {
+            if (key === ' ' && started || key === " " && textRight ===  "Пробіл") {
                 setStartTimer(true);
                 setTextLeft('');
                 setTextRight(text[lang]);
                 setStarted(false);
+            } else if (textRight.length === 0 && key === " ") {
+                setStartTimer(false);
+                setNullTimer(true);
+                setStarted(false);
+                setTextLeft('Натисніть');
+                setTextRight('Пробіл')
+                setModalResultOpen(true);
+                console.log("finish")
             } else if (key === textRight.charAt(0)) {
                 setTextLeft(prevTextLeft => {
                     const newTextLeft = prevTextLeft + key;
                     return newTextLeft.length > maxTextLength ? newTextLeft.slice(1) : newTextLeft;
                 });
                 setTextRight(prevTextRight => prevTextRight.slice(1));
-            } else if (!ignoredKeys.includes(key) && key !== textRight.charAt(0)) {
+            } else if (!ignoredKeys.includes(key) && key !== textRight.charAt(0) &&
+            !(/\s/.test(textRight.charAt(0))) && textRight.length) {
                 const regEn = /[a-zA-Z]/;
                 const regRu = /[а-яА-Я]/;
                 const regUk = /[єЄіІїЇаґбвгдежзийклмнопрстуфхцчшщьюяАҐБВГДЕЄЖЗИЙКЛМНОПРСТУФХЦЧШЩЮЯ]/;
@@ -81,11 +95,11 @@ const PanelToolsContent = () => {
 
                 if (!isEn && !isRu && !isUk) {
                     setDialogVisible(true);
+                }else if(textRight.length === 0) {
+                    setStartTimer(false);
+                    setNullTimer(false);
                 }
-            } else if (textRight.length === 0) {
-                setStartTimer(false);
-                setNullTimer(false);
-            }
+            } 
         };
 
         window.addEventListener('keydown', handleKeyDown);
@@ -101,7 +115,7 @@ const PanelToolsContent = () => {
             )}
             <h1 className={styles.key_bourd__head}></h1>
             {setTimer &&
-                <Timer startTimer={startTimer} nullTimer={nullTimer} />
+                <Timer startTimer={startTimer} nullTimer={nullTimer} textRight={textRight} setLevel={setLevel} setTypingSpeedResult={setTypingSpeedResult} setCounter={setCounter} counter={counter} />
             }
             <div id={styles.stroke}>
                 <div className={styles.left_side}>{textLeft}</div>
@@ -134,6 +148,9 @@ const PanelToolsContent = () => {
                     <Image src={right} alt="right-hand" className={styles.right_hand} />
                 </div>
             </div>
+            {modalResultOpen && (
+                <ModalResult setModalResultOpen={setModalResultOpen} level={level} typingSpeedResult={typingSpeedResult} counter={counter}/>
+            )}
         </div>
     )
 }

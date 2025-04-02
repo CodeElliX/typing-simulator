@@ -3,7 +3,7 @@ import styles from './keyboard.module.css';
 const Keyboard = (props) => {
 
     let activeKey;
-    if (props.textRight && props.textRight.length > 6) {
+    if (props.textRight && props.textRight !== "Пробіл") {
         activeKey = props.textRight.charAt(0);
     } else {
         activeKey = "";

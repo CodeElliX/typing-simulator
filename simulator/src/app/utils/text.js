@@ -1,5 +1,5 @@
 export const text = {
-    en: "stroke side",
+    en: "stroke side content meta head body scale width right",
     //"stroke side content meta head body scale width right label index leg brain script many dear lion pen cat home black tree class height pull key load wall jam model salt quick last note zebra element yogurt font joke frog xerox user batman vendetta most little bottle list",
     ru: "йод принт юрта цемент олово мост щеголь боров чаша рысь фортуна ель шелест жолудь ирис явор эскимо валун гроздь зола узвар трамвай объем хворост феликс крепость импорт ворона мыс ладья воск зонт эра йогурт чан нерест колье филин съезд тетрадь арфа протест след право лодка",
     uk: "їжак простор слива лілія трійчастий кропива стовбур фартух ескімо молодий єнот яблуня щавель крихкий домівка цистерна зозуля дощ їдкий стрічка єдність йогурт причина береза дружність цемент квітка горобина покоївка крижаний жвавий тонкий діло сіно простор управа щедрість ",
