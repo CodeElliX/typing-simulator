@@ -37,7 +37,8 @@ const Timer = (props) => {
         }, 1000);
 
         return () => clearInterval(timer);
-    }, [props.startTimer, props.setLevel]);
+        // }, [props.startTimer, props.setLevel]);
+    }, [props.startTimer]);
 
     useEffect(() => {
         props.setLevel(determineLevel(typingSpeed));
@@ -49,9 +50,6 @@ const Timer = (props) => {
             <div className={`${styles.timer} ${!props.startTimer ? styles.finish : ""}`}>
                 <span className={styles.time}>{time}</span>
             </div>
-            {/* <div>Швидкість друку: {typingSpeed} символів/хв</div>
-            <div>Пройдено за {props.counter} секунд</div>
-            <div>Рівень: {determineLevel(typingSpeed)}</div> */}
         </>
     );
 };

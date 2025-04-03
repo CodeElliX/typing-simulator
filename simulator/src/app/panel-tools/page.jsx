@@ -20,6 +20,8 @@ const PanelTools = () => {
 };
 
 const PanelToolsContent = () => {
+    console.log("render");
+    
 
     const [started, setStarted] = useState(true);
     const [textLeft, setTextLeft] = useState('Натисніть');
