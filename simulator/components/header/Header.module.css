@@ -40,3 +40,15 @@
     text-decoration: underline;
     text-decoration-color: beige;
 }
+
+@media (min-width: 1025px) and (max-width: 1136px) {
+
+    .head {
+        width: 100vw;
+        height: 70px;
+    }
+
+    .list_head {
+        font-size: 26px;
+    }
+}

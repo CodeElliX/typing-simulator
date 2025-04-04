@@ -21,7 +21,7 @@ const PanelTools = () => {
 
 const PanelToolsContent = () => {
     console.log("render");
-    
+
 
     const [started, setStarted] = useState(true);
     const [textLeft, setTextLeft] = useState('Натисніть');
@@ -66,7 +66,7 @@ const PanelToolsContent = () => {
         const handleKeyDown = (event) => {
             const key = event.key;
             setPressedKey(key);
-            if (key === ' ' && started || key === " " && textRight ===  "Пробіл") {
+            if (key === ' ' && started || key === " " && textRight === "Пробіл") {
                 setStartTimer(true);
                 setTextLeft('');
                 setTextRight(text[lang]);
@@ -86,7 +86,7 @@ const PanelToolsContent = () => {
                 });
                 setTextRight(prevTextRight => prevTextRight.slice(1));
             } else if (!ignoredKeys.includes(key) && key !== textRight.charAt(0) &&
-            !(/\s/.test(textRight.charAt(0))) && textRight.length) {
+                !(/\s/.test(textRight.charAt(0))) && textRight.length) {
                 const regEn = /[a-zA-Z]/;
                 const regRu = /[а-яА-Я]/;
                 const regUk = /[єЄіІїЇаґбвгдежзийклмнопрстуфхцчшщьюяАҐБВГДЕЄЖЗИЙКЛМНОПРСТУФХЦЧШЩЮЯ]/;
@@ -97,11 +97,11 @@ const PanelToolsContent = () => {
 
                 if (!isEn && !isRu && !isUk) {
                     setDialogVisible(true);
-                }else if(textRight.length === 0) {
+                } else if (textRight.length === 0) {
                     setStartTimer(false);
                     setNullTimer(false);
                 }
-            } 
+            }
         };
 
         window.addEventListener('keydown', handleKeyDown);
@@ -151,7 +151,7 @@ const PanelToolsContent = () => {
                 </div>
             </div>
             {modalResultOpen && (
-                <ModalResult setModalResultOpen={setModalResultOpen} level={level} typingSpeedResult={typingSpeedResult} counter={counter}/>
+                <ModalResult setModalResultOpen={setModalResultOpen} level={level} typingSpeedResult={typingSpeedResult} counter={counter} />
             )}
         </div>
     )

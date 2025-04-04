@@ -2,7 +2,10 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Header from '../../components/header/Header';
 import { Nunito } from 'next/font/google';
-import { Providers } from './utils/providers'
+import { Providers } from './utils/providers';
+import ScreenSizeWrapper from './utils/screen-size-wrapper/ScreenSizeWrapper';
+
+
 const nunito = Nunito({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -18,10 +21,12 @@ export default function RootLayout({
   return (
     <html lang="uk">
       <body className={nunito.className}>
-        <Header />
-        <Providers>
-          {children}
-        </Providers>
+        <ScreenSizeWrapper>
+          <Header />
+          <Providers>
+            {children}
+          </Providers>
+        </ScreenSizeWrapper>
       </body>
     </html>
   );
