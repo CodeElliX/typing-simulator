@@ -10,6 +10,8 @@ import Keyboard from '../keyboard/page';
 import ModalWarning from '../modal-warning/page';
 import { text } from '../utils/text'
 import ModalResult from '../modal-result/page';
+import { useDispatch } from 'react-redux';
+import { setStartTimer, setNullTimer } from '../redux/timerSlice';
 
 const PanelTools = () => {
     return (
@@ -21,22 +23,17 @@ const PanelTools = () => {
 
 const PanelToolsContent = () => {
     console.log("render");
-
-
     const [started, setStarted] = useState(true);
     const [textLeft, setTextLeft] = useState('Натисніть');
     const [textRight, setTextRight] = useState('Пробіл');
     const [pressedKey, setPressedKey] = useState("");
-    const [startTimer, setStartTimer] = useState(false);
-    const [nullTimer, setNullTimer] = useState(true);
+    const dispatch = useDispatch();
     const [modalResultOpen, setModalResultOpen] = useState(false);
     const [dialogVisible, setDialogVisible] = useState(false);
-    const [level, setLevel] = useState("");
-    const [typingSpeedResult, setTypingSpeedResult] = useState("");
-    const [counter, setCounter] = useState(0);
     const searchParams = useSearchParams();
     const maxTextLength = 16;
     const lang = searchParams.get('lang');
+
 
     const setTimer = lang === "en" || lang === "ru" || lang === "uk";
     const ignoredKeys = [' ', 'Space', 'Shift', 'Control', 'Alt', 'Meta', 'Tab', 'Escape', 'Enter', 'Backspace', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12', 'Insert', 'Home', 'End', 'PageUp', 'PageDown', 'NumLock'];
@@ -67,13 +64,13 @@ const PanelToolsContent = () => {
             const key = event.key;
             setPressedKey(key);
             if (key === ' ' && started || key === " " && textRight === "Пробіл") {
-                setStartTimer(true);
+                dispatch(setStartTimer(true));
                 setTextLeft('');
                 setTextRight(text[lang]);
                 setStarted(false);
             } else if (textRight.length === 0 && key === " ") {
-                setStartTimer(false);
-                setNullTimer(true);
+                dispatch(setStartTimer(false));
+                dispatch(setNullTimer(true));
                 setStarted(false);
                 setTextLeft('Натисніть');
                 setTextRight('Пробіл')
@@ -98,8 +95,8 @@ const PanelToolsContent = () => {
                 if (!isEn && !isRu && !isUk) {
                     setDialogVisible(true);
                 } else if (textRight.length === 0) {
-                    setStartTimer(false);
-                    setNullTimer(false);
+                    dispatch(setStartTimer(false));
+                    dispatch(setNullTimer(false));
                 }
             }
         };
@@ -117,7 +114,7 @@ const PanelToolsContent = () => {
             )}
             <h1 className={styles.key_bourd__head}></h1>
             {setTimer &&
-                <Timer startTimer={startTimer} nullTimer={nullTimer} textRight={textRight} setLevel={setLevel} setTypingSpeedResult={setTypingSpeedResult} setCounter={setCounter} counter={counter} />
+                <Timer textRight={textRight} />
             }
             <div id={styles.stroke}>
                 <div className={styles.left_side}>{textLeft}</div>
@@ -151,7 +148,7 @@ const PanelToolsContent = () => {
                 </div>
             </div>
             {modalResultOpen && (
-                <ModalResult setModalResultOpen={setModalResultOpen} level={level} typingSpeedResult={typingSpeedResult} counter={counter} />
+                <ModalResult setModalResultOpen={setModalResultOpen} />
             )}
         </div>
     )

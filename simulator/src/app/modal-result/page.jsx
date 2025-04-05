@@ -1,7 +1,12 @@
 "use client";
+import { useSelector } from 'react-redux';
 import styles from './modal-result.module.css';
 
 const ModalResult = (props) => {
+
+    const counter = useSelector(state => state.timer.counter);
+    const level = useSelector(state => state.timer.level);
+    const typingSpeedResult = useSelector(state => state.timer.typingSpeedResult);
 
     const closeDialog = () => {
         props.setModalResultOpen(false);
@@ -20,15 +25,15 @@ const ModalResult = (props) => {
                 <div className={styles.modal_text}>
                     <span className={styles.speed_tittle}>
                         Швидкість друку:
-                        <p className={styles.speed}>{props.typingSpeedResult} зн/хв</p>
+                        <p className={styles.speed}>{typingSpeedResult} зн/хв</p>
                     </span>
                     <span>
                         Пройдено за:
-                        <p className={styles.finish_time}>{formatTime(props.counter)}</p>
+                        <p className={styles.finish_time}>{formatTime(counter)}</p>
                     </span>
                     <span className={styles.level}>
                         Рівень:
-                        <p className={styles.your_level}>{props.level}</p>
+                        <p className={styles.your_level}>{level}</p>
                     </span>
                 </div>
             </div>

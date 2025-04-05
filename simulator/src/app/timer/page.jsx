@@ -1,10 +1,16 @@
 "use client";
 import { useEffect, useState } from 'react';
 import styles from './timer.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCounter, setLevel, setTypingSpeedResult } from '../redux/timerSlice';
 
 const Timer = (props) => {
     const [time, setTime] = useState('00:00');
     const [initialCharCount, setInitialCharCount] = useState(0);
+    const startTimer = useSelector(state => state.timer.startTimer);
+    const nullTimer = useSelector(state => state.timer.nullTimer);
+    const counter = useSelector(state => state.timer.counter);
+    const dispatch = useDispatch();
 
     const formatTime = (seconds) => {
         const minutes = Math.floor(seconds / 60);
@@ -12,7 +18,7 @@ const Timer = (props) => {
         return `${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
     };
 
-    const typingSpeed = props.counter > 0 ? Math.round((initialCharCount / props.counter) * 60) : 0;
+    const typingSpeed = counter > 0 ? Math.round((initialCharCount / counter) * 60) : 0;
 
     const determineLevel = (speed) => {
         if (speed >= 170) return "високий";
@@ -21,33 +27,30 @@ const Timer = (props) => {
     };
 
     useEffect(() => {
-        if (!props.startTimer) return;
-        if (props.nullTimer) {
+        if (!startTimer) return;
+        if (nullTimer) {
             setTime('00:00');
-            props.setCounter(0);
+            dispatch(setCounter(0));
             setInitialCharCount(props.textRight.length);
         }
-
+        let current = 0;
         const timer = setInterval(() => {
-            props.setCounter(prevCounter => {
-                const newCounter = prevCounter + 1;
-                setTime(formatTime(newCounter));
-                return newCounter;
-            });
+            current += 1;
+            dispatch(setCounter(current));
+            setTime(formatTime(current));
         }, 1000);
 
         return () => clearInterval(timer);
-        // }, [props.startTimer, props.setLevel]);
-    }, [props.startTimer]);
+    }, [startTimer, nullTimer]);
 
     useEffect(() => {
-        props.setLevel(determineLevel(typingSpeed));
-        props.setTypingSpeedResult(typingSpeed);
+        dispatch(setLevel(determineLevel(typingSpeed)));
+        dispatch(setTypingSpeedResult(typingSpeed));
     }, [typingSpeed]);
 
     return (
         <>
-            <div className={`${styles.timer} ${!props.startTimer ? styles.finish : ""}`}>
+            <div className={`${styles.timer} ${!startTimer ? styles.finish : ""}`}>
                 <span className={styles.time}>{time}</span>
             </div>
         </>
