@@ -1,10 +1,13 @@
+"use client";
+import { useSelector } from 'react-redux';
 import styles from './keyboard.module.css';
 
 const Keyboard = (props) => {
 
+    const textRight = useSelector(state => state.panelTools.textRight);
     let activeKey;
-    if (props.textRight && props.textRight !== "Пробіл") {
-        activeKey = props.textRight.charAt(0);
+    if (textRight && textRight !== "Пробіл") {
+        activeKey = textRight.charAt(0);
     } else {
         activeKey = "";
     }

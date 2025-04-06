@@ -10,8 +10,9 @@ import Keyboard from '../keyboard/page';
 import ModalWarning from '../modal-warning/page';
 import { text } from '../utils/text'
 import ModalResult from '../modal-result/page';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setStartTimer, setNullTimer } from '../redux/timerSlice';
+import { setTextRight, setTextLeft } from '../redux/panelToolsSlice';
 
 const PanelTools = () => {
     return (
@@ -22,11 +23,9 @@ const PanelTools = () => {
 };
 
 const PanelToolsContent = () => {
-    console.log("render");
     const [started, setStarted] = useState(true);
-    const [textLeft, setTextLeft] = useState('Натисніть');
-    const [textRight, setTextRight] = useState('Пробіл');
-    const [pressedKey, setPressedKey] = useState("");
+    const textRight = useSelector(state => state.panelTools.textRight);
+    const textLeft = useSelector(state => state.panelTools.textLeft);
     const dispatch = useDispatch();
     const [modalResultOpen, setModalResultOpen] = useState(false);
     const [dialogVisible, setDialogVisible] = useState(false);
@@ -62,26 +61,22 @@ const PanelToolsContent = () => {
     useEffect(() => {
         const handleKeyDown = (event) => {
             const key = event.key;
-            setPressedKey(key);
             if (key === ' ' && started || key === " " && textRight === "Пробіл") {
                 dispatch(setStartTimer(true));
-                setTextLeft('');
-                setTextRight(text[lang]);
+                dispatch(setTextLeft(''));
+                dispatch(setTextRight(text[lang]));
                 setStarted(false);
             } else if (textRight.length === 0 && key === " ") {
                 dispatch(setStartTimer(false));
                 dispatch(setNullTimer(true));
                 setStarted(false);
-                setTextLeft('Натисніть');
-                setTextRight('Пробіл')
+                dispatch(setTextLeft('Натисніть'));
+                dispatch(setTextRight('Пробіл'));
                 setModalResultOpen(true);
-                console.log("finish")
             } else if (key === textRight.charAt(0)) {
-                setTextLeft(prevTextLeft => {
-                    const newTextLeft = prevTextLeft + key;
-                    return newTextLeft.length > maxTextLength ? newTextLeft.slice(1) : newTextLeft;
-                });
-                setTextRight(prevTextRight => prevTextRight.slice(1));
+                const newTextLeft = (textLeft + key).slice(-maxTextLength);
+                dispatch(setTextLeft(newTextLeft));
+                dispatch(setTextRight(textRight.slice(1)));
             } else if (!ignoredKeys.includes(key) && key !== textRight.charAt(0) &&
                 !(/\s/.test(textRight.charAt(0))) && textRight.length) {
                 const regEn = /[a-zA-Z]/;
@@ -110,11 +105,11 @@ const PanelToolsContent = () => {
     return (
         <div className={styles.key_bourd}>
             {dialogVisible && (
-                <ModalWarning setDialogVisible={setDialogVisible} textRight={textRight} pressedKey={pressedKey} />
+                <ModalWarning setDialogVisible={setDialogVisible} />
             )}
             <h1 className={styles.key_bourd__head}></h1>
             {setTimer &&
-                <Timer textRight={textRight} />
+                <Timer />
             }
             <div id={styles.stroke}>
                 <div className={styles.left_side}>{textLeft}</div>
@@ -133,7 +128,7 @@ const PanelToolsContent = () => {
                         ></span>
                     )}
                 </div>
-                <Keyboard lang={lang} activeKey={pressedKey} textRight={textRight} />
+                <Keyboard lang={lang} />
                 <div className={styles.pointer_with_right_hand}>
                     {pointerPosition && (
                         <span className={`${styles.pointer} ${styles.pointer_r_hand}`}

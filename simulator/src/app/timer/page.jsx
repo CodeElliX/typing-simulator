@@ -10,6 +10,7 @@ const Timer = (props) => {
     const startTimer = useSelector(state => state.timer.startTimer);
     const nullTimer = useSelector(state => state.timer.nullTimer);
     const counter = useSelector(state => state.timer.counter);
+    const textRight = useSelector(state => state.panelTools.textRight);
     const dispatch = useDispatch();
 
     const formatTime = (seconds) => {
@@ -31,7 +32,7 @@ const Timer = (props) => {
         if (nullTimer) {
             setTime('00:00');
             dispatch(setCounter(0));
-            setInitialCharCount(props.textRight.length);
+            setInitialCharCount(textRight.length);
         }
         let current = 0;
         const timer = setInterval(() => {
