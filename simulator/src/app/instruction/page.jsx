@@ -1,4 +1,3 @@
-import mouse from './../../../public/mouse.png';
 import styles from './instruction.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
