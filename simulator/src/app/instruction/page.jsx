@@ -3,6 +3,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 const Instruction = () => {
+    function solution(n){
+        
+      }
+   console.log(solution(4.6))
+
     return (
         <>
             <main className={styles.wrap}>

@@ -64,7 +64,6 @@
 .pointer_with_right_hand,
 .pointer_with_left_hand {
     position: relative;
-    ;
 }
 
 .pointer_with_right_hand img,
@@ -83,9 +82,5 @@
     background-color: red;
     border-radius: 50%;
     z-index: 5;
-}
-
-.pointer_r_hand,
-.pointer_l_hand {
-    display: none;
+    transition: all 0.2s ease-in-out;
 }

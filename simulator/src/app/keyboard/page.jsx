@@ -1,9 +1,13 @@
 "use client";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from './keyboard.module.css';
+import { useEffect, useRef } from 'react';
+import { setCurrentColorPressedKey } from '../redux/panelToolsSlice';
 
 const Keyboard = (props) => {
-
+    const dispatch = useDispatch();
+    const activeKeyRef = useRef(null);
+    
     const textRight = useSelector(state => state.panelTools.textRight);
     let activeKey;
     if (textRight && textRight !== "Пробіл") {
@@ -11,6 +15,15 @@ const Keyboard = (props) => {
     } else {
         activeKey = "";
     }
+
+    useEffect(() => {
+        if (activeKeyRef.current) {
+            const computedStyle = window.getComputedStyle(activeKeyRef.current);
+            const bgColor = computedStyle.backgroundColor;
+            dispatch(setCurrentColorPressedKey(bgColor))
+        }
+    }, [activeKey])
+
     const isUpperCase = activeKey === activeKey.toUpperCase() && isNaN(activeKey);
 
     const shiftLeft = new Set(["Y", "U", "I", "O", "P", "H", "J", "K", "L", "B", "N", "M", "^", "&", "*", "(", ")", "_", "+", "\"", ":", "<", ">", "?", "|", "{", "}", "Н", "Г", "I", "Щ", "З", "Р", "О", "Л", "Д", "И", "Т", "Ь", "Х", "Ж", "Э", "Б", "Ю", "Ї", "Є"]);
@@ -57,6 +70,7 @@ const Keyboard = (props) => {
 
                             return (
                                 <div
+                                    ref={isActive ? activeKeyRef : null}
                                     key={index}
                                     className={`${styles.btn} ${styles[`key_${rowIndex}_${index}`]} ${isActive || isShiftActive ? styles.activeKey : ''}`}
                                 >

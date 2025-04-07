@@ -12,7 +12,7 @@ import { text } from '../utils/text'
 import ModalResult from '../modal-result/page';
 import { useDispatch, useSelector } from 'react-redux';
 import { setStartTimer, setNullTimer } from '../redux/timerSlice';
-import { setTextRight, setTextLeft } from '../redux/panelToolsSlice';
+import { setTextRight, setTextLeft, setPressedKey } from '../redux/panelToolsSlice';
 
 const PanelTools = () => {
     return (
@@ -23,44 +23,64 @@ const PanelTools = () => {
 };
 
 const PanelToolsContent = () => {
-    const [started, setStarted] = useState(true);
     const textRight = useSelector(state => state.panelTools.textRight);
     const textLeft = useSelector(state => state.panelTools.textLeft);
+    const currentColor = useSelector(state => state.panelTools.currentColorPressedKey);
     const dispatch = useDispatch();
     const [modalResultOpen, setModalResultOpen] = useState(false);
     const [dialogVisible, setDialogVisible] = useState(false);
+    const [leftPointer, setLeftPointer] = useState(null);
+    const [rightPointer, setRightPointer] = useState(null);
+    const [started, setStarted] = useState(true);
     const searchParams = useSearchParams();
     const maxTextLength = 16;
     const lang = searchParams.get('lang');
-
-
     const setTimer = lang === "en" || lang === "ru" || lang === "uk";
     const ignoredKeys = [' ', 'Space', 'Shift', 'Control', 'Alt', 'Meta', 'Tab', 'Escape', 'Enter', 'Backspace', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12', 'Insert', 'Home', 'End', 'PageUp', 'PageDown', 'NumLock'];
 
-
-    const [pointerPosition, setPointerPosition] = useState(null);
-
     const fingerPositions = {
         leftHand: {
-            little: { left: 7, top: 196, color: 'rgb(197, 199, 255)' },
-            ring: { left: 33, top: 168, color: 'rgb(251, 229, 202)' },
-            middle: { left: 73, top: 155, color: 'rgb(197, 253, 219)' },
-            index: { left: 114, top: 165, color: 'rgb(212, 213, 254)' },
-            thumb: { left: 150, top: 235, color: 'rgb(251, 221, 255)' }
+            little: { left: 7, top: 196, color: 'rgb(179, 178, 255)' },
+            ring: { left: 33, top: 168, color: 'rgb(255, 221, 179)' },
+            middle: { left: 73, top: 155, color: 'rgb(179, 255, 204)' },
+            index: { left: 114, top: 165, color: 'rgb(201, 200, 255)' },
+            thumb: { left: 150, top: 235, color: 'rgb(255, 209, 255)' }
         },
         rightHand: {
             little: { left: 149, top: 196, color: 'rgb(192, 194, 255)' },
-            ring: { left: 123, top: 168, color: 'rgb(251, 200, 202)' },
-            middle: { left: 83, top: 156, color: 'rgb(180, 181, 255)' },
-            index: { left: 42, top: 165, color: 'rgb(209, 186, 235)' },
-            thumb: { left: 8, top: 235, color: 'rgb(251, 221, 255)' }
+            ring: { left: 123, top: 168, color: 'rgb(255, 179, 179)' },
+            middle: { left: 83, top: 156, color: 'rgb(155, 153, 255)' },
+            index: { left: 42, top: 165, color: 'rgba(154, 72, 198, 0.5)' },
+            thumb: { left: 8, top: 235, color: 'rgb(255, 209, 255)' }
         }
     };
 
+    useEffect(() => {
+        if (!currentColor || textRight === 'Пробіл') {
+            setLeftPointer(null);
+            setRightPointer(null);
+            return;
+        }
+        let foundLeft = null;
+        let foundRight = null;
+        for (const finger in fingerPositions.leftHand) {
+            if (fingerPositions.leftHand[finger].color === currentColor) {
+                foundLeft = fingerPositions.leftHand[finger];
+            }
+        }
+        for (const finger in fingerPositions.rightHand) {
+            if (fingerPositions.rightHand[finger].color === currentColor) {
+                foundRight = fingerPositions.rightHand[finger];
+            }
+        }
+        setLeftPointer(foundLeft);
+        setRightPointer(foundRight);
+    }, [currentColor, textRight]);
 
     useEffect(() => {
         const handleKeyDown = (event) => {
             const key = event.key;
+            dispatch(setPressedKey(key));
             if (key === ' ' && started || key === " " && textRight === "Пробіл") {
                 dispatch(setStartTimer(true));
                 dispatch(setTextLeft(''));
@@ -118,24 +138,22 @@ const PanelToolsContent = () => {
             <div className={styles.instrument_panel}>
                 <div className={styles.pointer_with_left_hand}>
                     <Image src={left} alt="left-hand" className={styles.right_hand} />
-                    {pointerPosition && (
+                    {leftPointer && (
                         <span className={`${styles.pointer} ${styles.pointer_l_hand}`}
                             style={{
-                                left: `${pointerPosition.left}px`,
-                                top: `${pointerPosition.top}px`,
-                                backgroundColor: pointerPosition.color
+                                left: `${leftPointer.left}px`,
+                                top: `${leftPointer.top}px`,
                             }}
                         ></span>
                     )}
                 </div>
                 <Keyboard lang={lang} />
                 <div className={styles.pointer_with_right_hand}>
-                    {pointerPosition && (
+                    {rightPointer && (
                         <span className={`${styles.pointer} ${styles.pointer_r_hand}`}
                             style={{
-                                left: `${pointerPosition.left}px`,
-                                top: `${pointerPosition.top}px`,
-                                backgroundColor: pointerPosition.color
+                                left: `${rightPointer.left}px`,
+                                top: `${rightPointer.top}px`,
                             }}
                         ></span>
                     )}
@@ -150,17 +168,3 @@ const PanelToolsContent = () => {
 }
 
 export default PanelTools;
-
-//Left hand:
-//little finger: left: 7px; top: 196px; color: rgb(197, 199, 255)
-//ring finger: left: 33px; top: 168px; color: rgb(251, 229, 202)
-//middle finger: left: 73px; top: 155px; color: rgb(197, 253, 219)
-//index finger: left: 114px; top: 165px; color: rgb(212, 213, 254)
-//big finger: left: 150px; top: 235px; color: rgb(251, 221, 255)
-
-//Right hand:
-//little finger: left: 149px; top: 196px; color: rgb(192, 194, 255)
-//ring finger: left: 123px; top: 168px; color: rgb(251, 200, 202)
-//middle finger: left: 83px; top: 156px; color: rgb(180, 181, 255)
-//index finger: left: 42px; top: 165px; color: rgb(209, 186, 235)
-//big finger: left: 8px; top: 235px; color: rgb(251, 221, 255)

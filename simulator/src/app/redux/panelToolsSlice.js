@@ -4,6 +4,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     textRight: 'Пробіл',
     textLeft: 'Натисніть',
+    pressedKey: '',
+    currentColorPressedKey: '',
 }
 
 export const panelToolsSlice = createSlice({
@@ -16,8 +18,14 @@ export const panelToolsSlice = createSlice({
         setTextLeft: (state, actions) => {
             state.textLeft = actions.payload;
         },
+        setPressedKey: (state, actions) => {
+            state.pressedKey = actions.payload;
+        },
+        setCurrentColorPressedKey: (state, actions) => {
+            state.currentColorPressedKey = actions.payload;
+        },
     }
 })
 
-export const { setTextRight, setTextLeft } = panelToolsSlice.actions;
+export const { setTextRight, setTextLeft, setPressedKey, setCurrentColorPressedKey } = panelToolsSlice.actions;
 export default panelToolsSlice.reducer;
