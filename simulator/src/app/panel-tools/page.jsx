@@ -127,7 +127,6 @@ const PanelToolsContent = () => {
             {dialogVisible && (
                 <ModalWarning setDialogVisible={setDialogVisible} />
             )}
-            <h1 className={styles.key_bourd__head}></h1>
             {setTimer &&
                 <Timer />
             }
