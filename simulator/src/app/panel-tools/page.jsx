@@ -11,8 +11,8 @@ import ModalWarning from '../modal-warning/page';
 import { text } from '../utils/text'
 import ModalResult from '../modal-result/page';
 import { useDispatch, useSelector } from 'react-redux';
-import { setStartTimer, setNullTimer } from '../redux/timerSlice';
-import { setTextRight, setTextLeft, setPressedKey } from '../redux/panelToolsSlice';
+import { setStartTimer, setNullTimer, setInitialCharCount } from '../redux/timerSlice';
+import { setTextRight, setTextLeft, setPressedKey, setStarted, setLang } from '../redux/panelToolsSlice';
 
 const PanelTools = () => {
     return (
@@ -26,15 +26,15 @@ const PanelToolsContent = () => {
     const textRight = useSelector(state => state.panelTools.textRight);
     const textLeft = useSelector(state => state.panelTools.textLeft);
     const currentColor = useSelector(state => state.panelTools.currentColorPressedKey);
+    const started = useSelector(state => state.panelTools.started);
+    const lang = useSelector(state => state.panelTools.lang);
     const dispatch = useDispatch();
     const [modalResultOpen, setModalResultOpen] = useState(false);
     const [dialogVisible, setDialogVisible] = useState(false);
     const [leftPointer, setLeftPointer] = useState(null);
     const [rightPointer, setRightPointer] = useState(null);
-    const [started, setStarted] = useState(true);
-    const searchParams = useSearchParams();
     const maxTextLength = 16;
-    const lang = searchParams.get('lang');
+    const searchParams = useSearchParams();
     const setTimer = lang === "en" || lang === "ru" || lang === "uk";
     const ignoredKeys = [' ', 'Space', 'Shift', 'Control', 'Alt', 'Meta', 'Tab', 'Escape', 'Enter', 'Backspace', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12', 'Insert', 'Home', 'End', 'PageUp', 'PageDown', 'NumLock'];
 
@@ -56,23 +56,37 @@ const PanelToolsContent = () => {
     };
 
     useEffect(() => {
+        const currentLang = searchParams.get('lang');
+        dispatch(setLang(currentLang));
+        dispatch(setTextLeft('Натисніть'));
+        dispatch(setTextRight('Пробіл'));
+        dispatch(setStarted(true));
+        dispatch(setStartTimer(false));
+        dispatch(setNullTimer(false));
+    }, [searchParams.get('lang')]);
+
+    useEffect(() => {
         if (!currentColor || textRight === 'Пробіл') {
             setLeftPointer(null);
             setRightPointer(null);
             return;
         }
+
         let foundLeft = null;
         let foundRight = null;
+
         for (const finger in fingerPositions.leftHand) {
             if (fingerPositions.leftHand[finger].color === currentColor) {
                 foundLeft = fingerPositions.leftHand[finger];
             }
         }
+
         for (const finger in fingerPositions.rightHand) {
             if (fingerPositions.rightHand[finger].color === currentColor) {
                 foundRight = fingerPositions.rightHand[finger];
             }
         }
+
         setLeftPointer(foundLeft);
         setRightPointer(foundRight);
     }, [currentColor, textRight]);
@@ -81,27 +95,40 @@ const PanelToolsContent = () => {
         const handleKeyDown = (event) => {
             const key = event.key;
             dispatch(setPressedKey(key));
-            if (key === ' ' && started || key === " " && textRight === "Пробіл") {
+
+            if ((key === ' ' && started) || (key === ' ' && textRight === 'Пробіл')) {
+                const langText = text[lang] || '';
+                dispatch(setInitialCharCount(langText.length));
                 dispatch(setStartTimer(true));
                 dispatch(setTextLeft(''));
-                dispatch(setTextRight(text[lang]));
-                setStarted(false);
-            } else if (textRight.length === 0 && key === " ") {
+                dispatch(setTextRight(langText));
+                dispatch(setStarted(false));
+            }
+
+            else if (textRight.length === 0 && key === ' ') {
                 dispatch(setStartTimer(false));
                 dispatch(setNullTimer(true));
-                setStarted(false);
+                dispatch(setStarted(false));
                 dispatch(setTextLeft('Натисніть'));
                 dispatch(setTextRight('Пробіл'));
                 setModalResultOpen(true);
-            } else if (key === textRight.charAt(0)) {
+            }
+
+            else if (key === textRight.charAt(0)) {
                 const newTextLeft = (textLeft + key).slice(-maxTextLength);
                 dispatch(setTextLeft(newTextLeft));
                 dispatch(setTextRight(textRight.slice(1)));
-            } else if (!ignoredKeys.includes(key) && key !== textRight.charAt(0) &&
-                !(/\s/.test(textRight.charAt(0))) && textRight.length) {
+            }
+
+            else if (
+                !ignoredKeys.includes(key) &&
+                key !== textRight.charAt(0) &&
+                !(/\s/.test(textRight.charAt(0))) &&
+                textRight.length
+            ) {
                 const regEn = /[a-zA-Z]/;
-                const regRu = /[а-яА-Я]/;
-                const regUk = /[єЄіІїЇаґбвгдежзийклмнопрстуфхцчшщьюяАҐБВГДЕЄЖЗИЙКЛМНОПРСТУФХЦЧШЩЮЯ]/;
+                const regRu = /[а-яА-ЯёЁ]/;
+                const regUk = /[єЄіІїЇаґАҐ]/;
 
                 const isEn = regEn.test(textRight.charAt(0)) && regEn.test(key);
                 const isRu = regRu.test(textRight.charAt(0)) && regRu.test(key);
@@ -117,10 +144,8 @@ const PanelToolsContent = () => {
         };
 
         window.addEventListener('keydown', handleKeyDown);
-        return () => {
-            window.removeEventListener('keydown', handleKeyDown);
-        };
-    }, [textRight, dialogVisible]);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [textRight, textLeft, lang, started, dispatch]);
 
     return (
         <div className={styles.key_bourd}>

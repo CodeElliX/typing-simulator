@@ -6,6 +6,7 @@ const initialState = {
     counter: 0,
     level: '',
     typingSpeedResult: '',
+    initialCharCount: 0,
 }
 
 export const timerSlice = createSlice({
@@ -27,9 +28,12 @@ export const timerSlice = createSlice({
         setTypingSpeedResult: (state, actions) => {
             state.typingSpeedResult = actions.payload;
         },
+        setInitialCharCount: (state, action) => {
+            state.initialCharCount = action.payload;
+        },
     }
 });
 
-export const { setStartTimer, setNullTimer, setCounter, setLevel, setTypingSpeedResult } = timerSlice.actions;
+export const { setStartTimer, setNullTimer, setCounter, setLevel, setTypingSpeedResult, setInitialCharCount } = timerSlice.actions;
 
 export default timerSlice.reducer;

@@ -6,7 +6,7 @@ import { setCounter, setLevel, setTypingSpeedResult } from '../redux/timerSlice'
 
 const Timer = (props) => {
     const [time, setTime] = useState('00:00');
-    const [initialCharCount, setInitialCharCount] = useState(0);
+    const initialCharCount = useSelector(state => state.timer.initialCharCount);
     const startTimer = useSelector(state => state.timer.startTimer);
     const nullTimer = useSelector(state => state.timer.nullTimer);
     const counter = useSelector(state => state.timer.counter);
@@ -32,7 +32,6 @@ const Timer = (props) => {
         if (nullTimer) {
             setTime('00:00');
             dispatch(setCounter(0));
-            setInitialCharCount(textRight.length);
         }
         let current = 0;
         const timer = setInterval(() => {
