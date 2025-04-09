@@ -1,6 +1,6 @@
 .wrap {
-display: flex;
-justify-content: center;
+    display: flex;
+    justify-content: center;
 }
 
 .main_instructions {
@@ -65,7 +65,7 @@ justify-content: center;
     list-style: none;
 }
 
-.main_instructions ol > li::before {
+.main_instructions ol>li::before {
     content: '➔';
     display: inline-block;
     width: 40px;
@@ -80,38 +80,3 @@ justify-content: center;
     height: 150px;
     width: 420px;
 }
-
-.container {
-    background: #f9f9f9;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
-    max-width: 600px;
-    margin: auto;
-  }
-  
-  .container h1 {
-    color: #ff6600;
-    font-size: 24px;
-    text-align: center;
-  }
-  
-  .container p {
-    font-size: 18px;
-    line-height: 1.6;
-    margin: 10px 0;
-  }
-  
-  .highlight {
-    color: #007bff;
-    font-weight: bold;
-  }
-  
-  .note {
-    background: #fff3cd;
-    padding: 10px;
-    border-left: 4px solid #ffa500;
-    border-radius: 5px;
-    font-style: italic;
-  }
-  
