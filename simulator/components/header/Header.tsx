@@ -1,8 +1,9 @@
 import Link from 'next/link';
 import styles from './Header.module.css';
+import React from 'react';
 
 
-const Header = () => {
+const Header: React.FC = () => {
   return (
     <header className={styles.head}>
       <ul className={styles.list_head}>
