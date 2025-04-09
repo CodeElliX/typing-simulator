@@ -1,12 +1,7 @@
 import styles from './instruction.module.css';
 import Image from 'next/image';
-import Link from 'next/link';
 
 const Instruction = () => {
-    function solution(n) {
-
-    }
-    console.log(solution(4.6))
 
     return (
         <>
@@ -21,15 +16,11 @@ const Instruction = () => {
                             <li>англійською </li>
                             <li>та російською(не бажано).</li>
                         </ol>
-
                         <li>І потім вже можна обрати уроки.</li>
-
                         Якщо ви тільки почали вивчати техніку сліпого друку - бажано розпочинати
                         з першого уроку.
-
                     </ul>
                     <h2>Положення пальців на клавіатурі</h2>
-
                     <ul>
                         <li> На віртуальній клавіатурі ти можешь побачити дві горизонтальні рисочки
                             під літерами <span className={styles.btn_inst}>А</span> та <span className={styles.btn_inst}>O</span> - на клавіатурі українською і російскою, та <span className={styles.btn_inst}>F</span> і <span className={styles.btn_inst}>J</span> -
