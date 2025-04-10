@@ -1,8 +1,7 @@
-import React from 'react';
 import styles from './instruction.module.css';
 import Image from 'next/image';
 
-const Instruction: React.FC = () => {
+const Instruction = () => {
 
     return (
         <>

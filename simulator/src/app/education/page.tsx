@@ -11,10 +11,11 @@ const Education = () => {
     const [lang, setLang] = useState('en');
     const [isClick, setClick] = useState(false);
 
-    const languageSelectionHandler = (selectedLanguage) => {
+    const languageSelectionHandler = (selectedLanguage: string) => {
         setClick(true);
         setLang(selectedLanguage);
     }
+
     return (
         <div className={styles.wrap}>
             {!isClick && (
