@@ -3,13 +3,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 87vh;
 }
 
 .language_selection {
     display: flex;
     align-items: center;
     gap: 40px;
-    margin-top: 130px;
 }
 
 .language_selection img {

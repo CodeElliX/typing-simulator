@@ -1,0 +1,37 @@
+.footer__wrap {
+    position: sticky;
+    bottom: -50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 120%;
+    height: 50px;
+    background-color: rgb(203, 252, 224);
+    box-shadow: 0 0 10px 4px rgba(63, 66, 69, 0.7);
+}
+
+.content{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-self: center;
+    font-style: normal;
+    color: white;
+    padding: 0 2%;
+    box-shadow: 0 0 10px 4px rgba(63, 66, 69, 0.3);
+    background-color: rgb(201, 198, 255);
+}
+
+.content p {
+    text-align: center;
+    font-size: 12px;
+    padding: 0;
+    margin: 0;
+}
+
+.content p a {
+    text-decoration: underline;
+    color: white;
+}
+

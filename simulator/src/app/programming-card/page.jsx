@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState, Suspense } from "react";
+import { useEffect, useState, Suspense, useRef, useLayoutEffect } from "react";
 import { useSearchParams } from 'next/navigation';
 import styles from "./programming-card.module.css";
 import Link from "next/link";
@@ -46,9 +46,10 @@ const ProgrammingCardsContent = () => {
         if (lang && objCardsLengProgramming[lang]) {
             setCards(objCardsLengProgramming[lang]);
             setSelectedButton(lang);
-            window.scrollTo({ bottom: 0, behavior: "smooth" })
+            window.scrollTo({ top: 0, behavior: "smooth" })
         }
     }, [searchParams])
+
 
     return (
         <>

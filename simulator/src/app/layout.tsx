@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Header from '../../components/header/Header';
+import Footer from '../../components/footer/page';
 import { Nunito } from 'next/font/google';
 import { Providers } from './utils/providers';
 import ScreenSizeWrapper from './utils/screen-size-wrapper/ScreenSizeWrapper';
@@ -27,6 +28,7 @@ export default function RootLayout({
             {children}
           </Providers>
         </ScreenSizeWrapper>
+        <Footer />
       </body>
     </html>
   );

@@ -4,6 +4,7 @@
     flex-direction: column;
     border-radius: 8px;
     min-height: 400px;
+    height: 70vh;
 }
 
 .menu_programming__first-block {

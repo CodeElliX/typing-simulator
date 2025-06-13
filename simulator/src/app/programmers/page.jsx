@@ -11,7 +11,7 @@ const Programmers = () => {
                 <div className={styles.buttonsProgramming}>
                     <h1>
                         {headerText.split("").map((char, i) => (
-                            <span key={i} style={{ animationDelay: `${i * 0.03}s` }}>
+                            <span key={i} style={{ animationDelay: `${i * 0.03}s`}}>
                                 {char === " " ? "\u00A0" : char}
                             </span>
                         ))}
