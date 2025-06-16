@@ -36,7 +36,7 @@ const PanelToolsContent = () => {
     const maxTextLength = 16;
     const searchParams = useSearchParams();
     const setTimer = lang === "en" || lang === "ru" || lang === "uk";
-    const ignoredKeys = [' ', 'Space', 'Shift', 'Control', 'Alt', 'Meta', 'Tab', 'Escape', 'Enter', 'Backspace', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12', 'Insert', 'Home', 'End', 'PageUp', 'PageDown', 'NumLock', ',', '.', '?', '<', '>', '/', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '-', '=', '+', '|', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '}', '{', '[', ']'];
+    const ignoredKeys = [' ', 'Space', 'Shift', 'Control', 'Alt', 'Meta', 'Tab', 'Escape', 'Enter', 'Backspace', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12', 'Insert', 'Home', 'End', 'PageUp', 'PageDown', 'NumLock', ',', '.', ':', '<', '>', '?', '<', '>', '/', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '-', '=', '+', '|', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '}', '{', '[', ']'];
 
     const fingerPositions = {
         leftHand: {
@@ -95,6 +95,7 @@ const PanelToolsContent = () => {
         const handleKeyDown = (event) => {
             const key = event.key;
             dispatch(setPressedKey(key));
+            event.preventDefault();
 
             if ((key === ' ' && started) || (key === ' ' && textRight === 'Пробіл')) {
                 const langText = text[lang] || '';
@@ -103,7 +104,6 @@ const PanelToolsContent = () => {
                 dispatch(setTextLeft(''));
                 dispatch(setTextRight(langText));
                 dispatch(setStarted(false));
-                event.preventDefault();
             }
 
             else if (textRight.length === 0 && key === ' ') {
@@ -127,9 +127,9 @@ const PanelToolsContent = () => {
                 !(/\s/.test(textRight.charAt(0))) &&
                 textRight.length
             ) {
-                const regEn = /[a-zA-Z]/;
-                const regRu = /[а-яА-ЯёЁ]/;
-                const regUk = /[єЄіІїЇаґАҐ]/;
+                const regEn = /[a-zA-Z{}\[\],.;:"'<>\/!@#$%^&*()_+\-|`~\\]/;
+                const regRu = /[а-яА-ЯёЁ{}\[\],.;:"'<>\/!@#$%^&*()_+\-|`~\\]/;
+                const regUk = /[єЄіІїЇаґАҐ{}\[\],.;:"'<>\/!@#$%^&*()_+\-|`~\\]/;
 
                 const isEn = regEn.test(textRight.charAt(0)) && regEn.test(key);
                 const isRu = regRu.test(textRight.charAt(0)) && regRu.test(key);
