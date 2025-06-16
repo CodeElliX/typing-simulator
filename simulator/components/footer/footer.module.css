@@ -1,4 +1,8 @@
-.content{
+.footer__wrap {
+    margin-top: 20px;
+}
+
+.content {
     display: flex;
     flex-direction: row;
     align-self: center;
@@ -22,4 +26,3 @@
     text-decoration: underline;
     color: hsl(237, 44%, 57%);
 }
-

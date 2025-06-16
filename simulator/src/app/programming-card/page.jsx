@@ -39,6 +39,7 @@ const ProgrammingCardsContent = () => {
         if (selectedButton) {
             window.scrollTo({ top: 80, behavior: "smooth" })
         }
+        return () => window.scrollTo({ top: 0, behavior: "smooth" })
     }, [selectedButton])
 
     useEffect(() => {
