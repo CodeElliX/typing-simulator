@@ -37,7 +37,7 @@ const ProgrammingCardsContent = () => {
 
     useEffect(() => {
         if (selectedButton) {
-            window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" })
+            window.scrollTo({ top: 80, behavior: "smooth" })
         }
     }, [selectedButton])
 
@@ -46,7 +46,6 @@ const ProgrammingCardsContent = () => {
         if (lang && objCardsLengProgramming[lang]) {
             setCards(objCardsLengProgramming[lang]);
             setSelectedButton(lang);
-            window.scrollTo({ top: 0, behavior: "smooth" })
         }
     }, [searchParams])
 
