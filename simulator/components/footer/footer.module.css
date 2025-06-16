@@ -1,37 +1,25 @@
-.footer__wrap {
-    position: sticky;
-    bottom: -50px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 120%;
-    height: 50px;
-    background-color: rgb(203, 252, 224);
-    box-shadow: 0 0 10px 4px rgba(63, 66, 69, 0.7);
-}
-
 .content{
     display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
+    flex-direction: row;
     align-self: center;
     font-style: normal;
-    color: white;
-    padding: 0 2%;
-    box-shadow: 0 0 10px 4px rgba(63, 66, 69, 0.3);
-    background-color: rgb(201, 198, 255);
+    gap: 20px;
 }
 
 .content p {
+    min-width: max-content;
     text-align: center;
     font-size: 12px;
     padding: 0;
     margin: 0;
 }
 
+.content span {
+    color: aqua;
+}
+
 .content p a {
     text-decoration: underline;
-    color: white;
+    color: hsl(237, 44%, 57%);
 }
 

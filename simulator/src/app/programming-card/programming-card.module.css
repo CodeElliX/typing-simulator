@@ -1,9 +1,9 @@
 .main_block_programming_cards {
-    /* margin: 20vh 0; */
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-self: center;
+    margin: 0 auto;
     height: 80%;
     width: 80%;
     gap: 20px;
