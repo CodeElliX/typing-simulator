@@ -21,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="uk">
-      <body className={nunito.className}>
+      <body className={nunito.className} suppressHydrationWarning={true}>
         <ScreenSizeWrapper>
           <Header />
           <Providers>
