@@ -103,6 +103,7 @@ const PanelToolsContent = () => {
                 dispatch(setTextLeft(''));
                 dispatch(setTextRight(langText));
                 dispatch(setStarted(false));
+                event.preventDefault();
             }
 
             else if (textRight.length === 0 && key === ' ') {
