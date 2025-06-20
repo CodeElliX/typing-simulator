@@ -1,3 +1,4 @@
+import Link from "next/link";
 import styles from "./page.module.css";
 
 export default function Home() {
@@ -17,8 +18,8 @@ export default function Home() {
           Ми — не комерційний проєкт! Усі уроки <strong>безоплатні</strong>, і тут немає набридливої реклами. 🚀
         </p>
         <section>
-          <button>Почати навчання</button>
-          <button>Перевірити свій рівень</button>
+          <Link href={'/education'}><button>Почати навчання</button></Link>
+          <Link href={'/speed-test'}><button>Перевірити свій рівень</button></Link>
         </section>
       </div>
     </div>

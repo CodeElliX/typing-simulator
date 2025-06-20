@@ -14,6 +14,13 @@ export const metadata: Metadata = {
   description: "Симулятор для вивчення техніки сліпого друку",
 };
 
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: 'no',
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -21,6 +28,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="uk">
+      <head>
+        <meta name="robots" content="noindex, nofollow" />
+      </head>
       <body className={nunito.className} suppressHydrationWarning={true}>
         <ScreenSizeWrapper>
           <Header />
